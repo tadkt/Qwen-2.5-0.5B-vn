@@ -1,0 +1,10 @@
+torch>=2.1
+transformers==4.49.0
+ms-swift==1.1.0
+timm
+deepspeed
+qwen_vl_utils 
+decord 
+librosa 
+pyav 
+icecream
