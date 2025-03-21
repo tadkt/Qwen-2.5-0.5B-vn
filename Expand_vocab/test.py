@@ -13,7 +13,7 @@
 
 from transformers import AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-7B", trust_remote_code=True, extra_vocab_file="qwen_extra.tiktoken")
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct", trust_remote_code=True, extra_vocab_file="qwen_extra.tiktoken")
 
 token = tokenizer("anh dọn dẹp xong anh qua")
 print(token)
