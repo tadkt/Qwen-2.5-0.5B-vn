@@ -4,7 +4,7 @@ Finetuning a small foundation model for Vietnamese
 # Instruction
 Swift does not natively support extra vocabulary, so we refer to swift.llm.model.register to add it manually:
 
-In line 184:
+In [line 184][https://github.com/modelscope/ms-swift/blob/74bc60b54b37d138203007b80bea957bc1dd14f3/swift/llm/model/register.py#L184]:
 ```
     tokenizer = AutoTokenizer.from_pretrained(model_dir, trust_remote_code=True)
 ```
