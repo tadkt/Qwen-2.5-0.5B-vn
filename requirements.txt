@@ -8,3 +8,4 @@ decord
 librosa 
 pyav 
 icecream
+wandb==0.19.7
