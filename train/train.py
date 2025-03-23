@@ -14,7 +14,7 @@ def train():
 
     # Hyperparameters for training
     # model
-    model_id_or_path = 'Qwen/Qwen2.5-0.5B-Instruct'  # model_id or model_path
+    model_id_or_path = 'Qwen2___5-0___5B-Instruct'  # model_id or model_path
     system = 'You are a helpful assistant.'
     output_dir = 'output'
 
@@ -60,6 +60,12 @@ def train():
     # Obtain the model and template, and add a trainable Lora layer on the model.
     model, tokenizer = get_model_tokenizer(model_id_or_path)
     logger.info(f'model_info: {model.model_info}')
+    # After the line: model, tokenizer = get_model_tokenizer(model_id_or_path)
+    logger.info(f'Tokenizer vocabulary size: {len(tokenizer)}')
+    logger.info(f'Model embedding size: {model.config.vocab_size}')
+    
+    # Optional: Check if custom tokenizer file is being used
+    logger.info(f'Tokenizer file path: {tokenizer.vocab_file if hasattr(tokenizer, "vocab_file") else "Not found"}')
     template = get_template(model.model_meta.template, tokenizer, default_system=system, max_length=max_length)
     template.set_mode('train')
 
