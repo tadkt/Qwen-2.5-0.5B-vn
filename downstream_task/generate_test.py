@@ -1,4 +1,5 @@
 # pip install datasets transformers safetensors torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 model_name = "tadkt/Qwen-2.5-0.5B-VN"
 
@@ -11,7 +12,7 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 prompt = "Giới thiệu về nước Việt Nam"
 messages = [
-    {"role": "system", "content": "Bạn là Qwen, được tạo bởi công ty Alibaba. Bạn là một người trợ lí ảo"},
+    {"role": "system", "content": "Bạn là một trợ lý AI thông minh và hữu ích. Hãy cung cấp câu trả lời chính xác, rõ ràng và dễ hiểu."},
     {"role": "user", "content": prompt}
 ]
 text = tokenizer.apply_chat_template(
