@@ -8,7 +8,7 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype="auto",
     device_map="auto"
 )
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 
 prompt = "Giới thiệu về nước Việt Nam"
 messages = [
@@ -20,17 +20,22 @@ text = tokenizer.apply_chat_template(
     tokenize=False,
     add_generation_prompt=True
 )
-model_inputs = tokenizer([text],  return_token_type_ids=False, return_tensors="pt").to(model.device)
+model_inputs = tokenizer([text], return_token_type_ids=False, return_tensors="pt").to(model.device)
 
+# Generate the output
 generated_ids = model.generate(
     **model_inputs,
-    max_new_tokens=512
+    max_new_tokens=512,
+    return_dict_in_generate=False  # Ensure we get token IDs directly
 )
-generated_ids = [
-    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-]
 
-response = tokenizer.batch_decode(generated_ids, skip_special_tokens=False)[0]
+# Decode the full output first
+full_output = tokenizer.decode(generated_ids[0], skip_special_tokens=False)
+
+# Find the part of the output that corresponds to the assistant's response
+# This assumes the assistant's response starts after the user's prompt and system message
+input_text_length = len(text)
+response_start = full_output.find(text) + input_text_length
+response = full_output[response_start:].split("<|im_end|>")[0]
 
 print("Generated Response:", response)
-
